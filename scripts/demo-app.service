@@ -1,0 +1,13 @@
+[Unit]
+Description=Demo Flask app
+After=network.target
+
+[Service]
+User=ec2-user
+WorkingDirectory=/opt/demo-app
+EnvironmentFile=/etc/demo-app.env
+ExecStart=/opt/demo-app/venv/bin/gunicorn --bind 0.0.0.0:8080 --workers 2 app:app
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

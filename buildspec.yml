@@ -1,0 +1,18 @@
+# Build stage: checks the code and creates the package that gets deployed.
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  build:
+    commands:
+      - python -m pip install -r requirements.txt
+      - python -m compileall -q app.py
+      - echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-7 > version.txt
+
+artifacts:
+  files:
+    - '**/*'
+  exclude-paths:
+    - '**/__pycache__/**'

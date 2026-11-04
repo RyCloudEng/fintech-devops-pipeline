@@ -1,0 +1,19 @@
+# Test stage: a failing test stops the pipeline before anything is deployed.
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - python -m pip install -r requirements.txt -r requirements-dev.txt
+  build:
+    commands:
+      - python -m pytest --junitxml=reports/junit.xml
+
+reports:
+  pytest:
+    files:
+      - junit.xml
+    base-directory: reports
+    file-format: JUNITXML
